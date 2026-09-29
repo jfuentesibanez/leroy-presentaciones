@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+.claude/
+*.part
+*.ytdl
+
+# Internal notes (client AI policy, contacts) stay on this disk only.
+CLAUDE.md
+
+# Videos stay on the local disk only: the public repo must not redistribute third-party clips.
+# Online, the deck plays them from YouTube (vid/start/end in slides.py).
+*/video/
+# Intermediate animation renders; img/ holds the final loops.
+*/build/originals-anim/
