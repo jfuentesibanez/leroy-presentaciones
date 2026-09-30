@@ -27,7 +27,7 @@ dict(kind="agenda", act="Novedades", title="Hoy"),
 
 # I. Qué ha cambiado
 dict(kind="anchor", act="Novedades", wide=True,
-     text="Desde el último taller, la IA no solo escribe.<br>Ahora ve, escucha y hace tareas."),
+     text="Desde el taller de verano han pasado muchas cosas.<br>Estas son las que os afectan."),
 dict(kind="table", act="Novedades", title="Septiembre de 2026: seis modelos en un mes",
      head=["Fecha", "Modelo", "Empresa", "Para qué"],
      rows=[["1 sep", "Claude Fable 5.1", "Anthropic", "el más capaz de Anthropic"],
