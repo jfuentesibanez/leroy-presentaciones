@@ -92,6 +92,14 @@ def art_block(name, pin=None):
     return (f'<div class="art{" has-pin" if pin else ""}"><img class="art-img" src="{uri}" '
             f'data-anim="{ANIM[name]}" alt="">{extra}</div>')
 
+def clip_block(c):
+    """A short muted loop beside the bullets (e.g. a product demo). Local file from video/,
+    poster from figures/; online, if the file is missing, falls back to the vendor's embed."""
+    poster = datauri_any(HERE / 'figures' / (c['slug'] + '.webp'), 'image/webp')
+    emb = html.escape(c.get('embed', ''))
+    return (f'<div class="art clip"><video class="clipv" src="video/{c["slug"]}.mp4" poster="{poster}" '
+            f'autoplay muted loop playsinline data-embed="{emb}"></video></div>')
+
 MAPDIR = HERE / 'maps'
 def map_svg(code):
     """A country outline from maps/<code>.geo.json (Natural Earth 10m), as a brass line.
@@ -288,7 +296,7 @@ def render(s, i):
     elif k == 'bullets':
         lis = ''.join(f'<li>{b}</li>' for b in s['items'])
         pol = s.get('polaroids')
-        has = bool(s.get('art') or pol)
+        has = bool(s.get('art') or pol or s.get('clip'))
         if has: cls.append('has-art')
         src = src_line(s)
         if pol:
@@ -296,7 +304,7 @@ def render(s, i):
         if s.get('pin'):
             src += f'<p class="src cred">{PHOTOCRED[s["pin"]]["credit"]}</p>'
         body = (f'<div class="col"><h2>{s["title"]}</h2><ul>{lis}</ul>{src}</div>'
-                + (polaroids(pol) if pol else art_block(s['art'], s.get('pin')) if has else ''))
+                + (clip_block(s['clip']) if s.get('clip') else polaroids(pol) if pol else art_block(s['art'], s.get('pin')) if has else ''))
     elif k == 'close':
         body = (f'<h1 class="cover-title">{s["title"]}</h1>'
                 f'<p class="mail"><a href="mailto:{s["mail"]}">{s["mail"]}</a></p>'
@@ -444,6 +452,8 @@ blockquote{font-size:44px;line-height:1.28;font-weight:400;font-style:italic;max
 .tbl td.no{color:#B0412A;font-weight:600}
 .tbl td.warn{color:#A67A00;font-weight:600}
 .fig{display:block;width:100%;max-width:1100px;max-height:470px;width:auto;max-width:100%;border:1px solid var(--line);border-radius:2px}
+.clip{justify-content:center}
+.clipv,.clip iframe{height:520px;max-height:72vh;width:auto;aspect-ratio:420/810;border:0;border-radius:18px;display:block}
 .tcap{font-size:19px;color:#5E5850;margin-top:16px;max-width:1000px;line-height:1.4}
 .pwhere{font-size:18px;color:#5E5850;margin:-6px 0 12px}
 .pbox{position:relative;background:#FDFCF8;border:1px solid var(--line);border-left:4px solid var(--leroy);
@@ -707,6 +717,10 @@ document.addEventListener('click',e=>{
   if(e.target.closest('a'))return;
   (e.clientX < innerWidth*0.28 ? prev : next)();
 });
+document.querySelectorAll('.clipv').forEach(v=>v.addEventListener('error',()=>{
+  const u=v.dataset.embed; if(!u||location.protocol==='file:')return;   // keep the poster offline
+  const f=document.createElement('iframe'); f.src=u; f.allow='autoplay; fullscreen'; f.className=v.className;
+  v.replaceWith(f); },true));
 fit();
 show(location.hash?parseInt(location.hash.slice(2))-1||0:0);
 setTimeout(prefetchAll,1500);
