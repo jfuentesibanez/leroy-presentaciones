@@ -154,8 +154,8 @@ dict(kind="bullets", act="Novedades", title="Dots: agentes que trabajan 24 horas
   "cada dot usa GPT-6 Astra y tiene su propio ordenador y navegador",
   "se le habla en ChatGPT, Slack, Teams o por llamada, y recuerda el contexto",
   "se conecta a más de 4.000 aplicaciones; con permiso, usa tu portátil",
-  "para ChatGPT Pro y Business Premium; en Enterprise, si lo activa el administrador"],
-     src="TechCrunch, BGR y The Next Web, 29 sep 2026 (OpenAI DevDay)",
+  "en España, no en Pro: solo en Business Premium, o en Enterprise si lo activa el administrador"],
+     src="OpenAI Help Center: Pro fuera del Espacio Económico Europeo, Suiza y Reino Unido; TechCrunch y BGR, 29 sep 2026",
      links=[("TechCrunch: Dots", "https://techcrunch.com/2026/09/29/openai-launches-dots-its-bubbly-agentic-avatar/"), ("keynote del DevDay", "https://www.youtube.com/watch?v=Fls_onRviPM")]),
 dict(kind="bullets", act="Novedades", title="El resto del DevDay, en lo que os toca", items=[
   "GPT-6.1 Sol: casi como Astra, a una quinta parte del precio",
